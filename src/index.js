@@ -5,6 +5,8 @@ import App from './components/App.jsx';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Route from 'react-router-dom/Route';
 import storeApp from './reducers';
 
 
@@ -21,6 +23,11 @@ let store = createStore(
 
 ReactDOM.render( 
 	<Provider store={store}>
-		<App />
+		<Router>
+			<div>
+			<Route path="/" exact component={App}/>
+			<Route path="/project/:id" component={App}/>
+			</div>
+		</Router>
 	</Provider> , document.getElementById('root'));
 
