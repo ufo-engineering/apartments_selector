@@ -1,4 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:200,300,400,500,600,700");
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif; }
+  background-color: #f8f8f8;
+  font-family: 'Fira Sans Condensed', sans-serif; }
+  body * {
+    outline: none !important; }
+
+.default-btn {
+  max-width: 373px;
+  width: 100%;
+  display: inline-block;
+  text-decoration: none;
+  height: 46px;
+  text-align: center;
+  color: #e86802 !important;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 46px;
+  border: solid 1px #e86802;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer; }
+  .default-btn:hover {
+    background-color: #e86802;
+    color: #fff !important; }
+  .default-btn:active {
+    background-color: #e86802;
+    color: #faddc2 !important; }
+  .default-btn._block {
+    display: block; }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/index.css';
 import App from './components/App.jsx';
+import Areas from './components/Areas.jsx';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -9,7 +9,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import storeApp from './reducers';
 
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/index.css';
 
 let store = createStore(
 	storeApp,
@@ -21,13 +22,14 @@ let store = createStore(
 // });
 
 
-ReactDOM.render( 
+ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<div>
-			<Route path="/" exact component={App}/>
-			<Route path="/project/:id" component={App}/>
+			<div className="container">
+				<Route path="/" exact component={App}/>
+				<Route path="/project/:id" component={App}/>
+				<Route path="/areas/:id" component={Areas}/>
+				<Route path="/buildings/:id" component={App}/>
 			</div>
 		</Router>
 	</Provider> , document.getElementById('root'));
-
