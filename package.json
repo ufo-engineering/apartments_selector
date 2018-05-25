@@ -4,13 +4,18 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "lodash.pick": "^4.4.0",
+    "lodash.range": "^3.2.0",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
+    "object-assign": "^4.1.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-paper-bindings": "^1.0.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "recompose": "^0.27.1",
     "redux": "^4.0.0"
   },
   "scripts": {

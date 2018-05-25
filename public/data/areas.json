@@ -1,0 +1,23 @@
+{
+  "id": 1488,
+  "name": "Area",
+  "description": "azaza",
+  "imagePath": "http://boho.projects.od.ua/img/LEH_SATU_AERIAL_D_02.jpg",
+  "total": 777,
+  "free": 651,
+  "contain": "buildings",
+  "values": {
+    "333": {
+      "status": "1",
+       "total_quantity": 54,
+       "available_quantity": 22,
+       "mask_coords": ["M-256.66669,-166.11111v0l-186,153l422,44l-73,-203l-108,100z", "M184,-86.5v0l-218,153l52,56l270,-58l47,-191l-53,-136l-34,126l-11,109l-23,7l-22,-41z", "M-292,34.5l-40,42l-20,109l173,-23l172,-139l-103,-127l-120,102l-20,64l-20,16z"]
+    },
+    "444": {
+      "status": "0",
+       "total_quantity": 14,
+       "available_quantity": 11,
+       "mask_coords": ["M365,3.5l47,-191l-53,-136l-34,126l-11,109z"]
+    }
+  }
+}

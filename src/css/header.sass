@@ -1,3 +1,69 @@
-
+@import "./var.sass"
 .header-component
   background-color: #fff
+  .project-header,
+  .active-header
+    span
+      line-height: 21px
+      font-size: 16px
+      color: #5a5a5a
+    h2
+      margin: 0 0 7px
+      color: #344763
+      font-size: 24px
+      font-weight: 600
+  .go-btn
+    display: inline-block
+    vertical-align: middle
+    height: 36px
+    background-color: transparent
+    border: solid 1px $main_blue
+    margin: 0 20px 0 10px
+    color: $main_blue !important
+    font-size: 14px
+    line-height: 36px
+    text-transform: uppercase
+    font-stretch: condensed
+    padding: 0 26px 0 26px
+    transition: all 0.3s ease
+    cursor: pointer
+    &:hover
+      background-color: $main_blue
+      color: #fff !important
+
+  .active-header
+    padding: 27px 40px
+    line-height: 36px
+    span
+      display: inline-block
+      vertical-align: middle
+      line-height: inherit
+    h2
+      display: inline-block
+      margin: 0
+      line-height: inherit
+      vertical-align: middle
+    .delimiter
+        display: inline-block
+        width: 1px
+        height: 36px
+        line-height: 36px
+        margin: 0 16px
+        &::before
+          display: inline-block
+          width: 100%
+          content: ''
+          height: 21px
+          vertical-align: middle
+          background-color: #e1e1e1
+
+  .project-header
+    text-align: center
+    padding: 18px
+    h2
+      display: block
+    .left
+      text-align: right
+      border-right: 1px solid #e1e1e1
+    .right
+      text-align: left

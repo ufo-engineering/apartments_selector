@@ -1,0 +1,42 @@
+
+.loader-wrp {
+  width: 150px;
+  height: 150px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.loader-wrp img {
+  width: 100%;
+  height: 100%;
+  -webkit-animation: svg 1.68s infinite cubic-bezier(0.19, 1, 0.22, 1);
+          animation: svg 1.68s infinite cubic-bezier(0.19, 1, 0.22, 1);
+}
+@-webkit-keyframes svg {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+}
+@keyframes svg {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    stroke-width: 1px;
+  }
+  15% {
+    stroke-width: 8px;
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    stroke-width: 1px;
+  }
+}

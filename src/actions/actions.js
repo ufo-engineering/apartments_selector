@@ -1,22 +1,33 @@
-import {FIRST_ACTION, SECOND_ACTION, THIRD_ACTION} from './actionTypes';
+import {
+  SET_PROJECT_DATA,
+  PAGER_ADD_TO_HISTORY,
+  PAGER_CURRENT_PAGE,
+  PAGER_REMOVE_LATEST
+} from './actionTypes';
 
-export function actFirst(text) {
-  return { 
-  	type: FIRST_ACTION,
-  	text: text
+export function setProject(dataObj) {
+  return {
+  	type: SET_PROJECT_DATA,
+  	dataObj
   }
 }
 
-export function actSec(text) {
-  return { 
-  	type: SECOND_ACTION, 
-  	text 
+export function pagerHistoryAdd(pageArr) {
+  return {
+  	type: PAGER_ADD_TO_HISTORY,
+  	pageArr
   }
 }
 
-export function actThird(text) {
-  return { 
-  	type: THIRD_ACTION, 
-  	text 
+export function setCurrentPage(currentPage) {
+  return {
+  	type: PAGER_CURRENT_PAGE,
+  	currentPage
+  }
+}
+
+export function removeLatestFromHistory() {
+  return {
+  	type: PAGER_REMOVE_LATEST
   }
 }

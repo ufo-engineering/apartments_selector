@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
-import firstRedus from './firstRedus'
+import projectData from './project'
+import pagerData from './pager'
 
 
 export default combineReducers({
-  firstRedus
+  projectData,
+  pagerData
 })

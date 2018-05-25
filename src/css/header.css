@@ -1,2 +1,66 @@
 .header-component {
   background-color: #fff; }
+  .header-component .project-header span,
+  .header-component .active-header span {
+    line-height: 21px;
+    font-size: 16px;
+    color: #5a5a5a; }
+  .header-component .project-header h2,
+  .header-component .active-header h2 {
+    margin: 0 0 7px;
+    color: #344763;
+    font-size: 24px;
+    font-weight: 600; }
+  .header-component .go-btn {
+    display: inline-block;
+    vertical-align: middle;
+    height: 36px;
+    background-color: transparent;
+    border: solid 1px #344763;
+    margin: 0 20px 0 10px;
+    color: #344763 !important;
+    font-size: 14px;
+    line-height: 36px;
+    text-transform: uppercase;
+    font-stretch: condensed;
+    padding: 0 26px 0 26px;
+    transition: all 0.3s ease;
+    cursor: pointer; }
+    .header-component .go-btn:hover {
+      background-color: #344763;
+      color: #fff !important; }
+  .header-component .active-header {
+    padding: 27px 40px;
+    line-height: 36px; }
+    .header-component .active-header span {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: inherit; }
+    .header-component .active-header h2 {
+      display: inline-block;
+      margin: 0;
+      line-height: inherit;
+      vertical-align: middle; }
+    .header-component .active-header .delimiter {
+      display: inline-block;
+      width: 1px;
+      height: 36px;
+      line-height: 36px;
+      margin: 0 16px; }
+      .header-component .active-header .delimiter::before {
+        display: inline-block;
+        width: 100%;
+        content: '';
+        height: 21px;
+        vertical-align: middle;
+        background-color: #e1e1e1; }
+  .header-component .project-header {
+    text-align: center;
+    padding: 18px; }
+    .header-component .project-header h2 {
+      display: block; }
+    .header-component .project-header .left {
+      text-align: right;
+      border-right: 1px solid #e1e1e1; }
+    .header-component .project-header .right {
+      text-align: left; }
