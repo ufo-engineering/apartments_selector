@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { compose } from 'recompose'
+import { connect } from 'react-redux'
 import pick from 'lodash.pick'
 
 import {
@@ -24,7 +24,9 @@ class Paper extends Component {
       loaded: false,
       showLayers: true,
       childArr: [],
-      sx: 500, // scale center x
+      hoverArea: {},
+      showPin: false,
+      sx: 0, // scale center x
       sy: 0, // scale center y
       tx: 0, // translate x
       ty: 0, // translate y
@@ -34,50 +36,39 @@ class Paper extends Component {
     }
     this._view = null
 
-this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.imageLoaded = this.imageLoaded.bind(this);
-		this.childrenCreate = this.childrenCreate.bind(this);
+    this.childrenCreate = this.childrenCreate.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleLeave = this.handleLeave.bind(this);
+		this.handleMouseMove = this.handleMouseMove.bind(this);
+
   }
 
-
-
-
   fitImage(image){
-     // const { imageWidth, imageHeight, width, height } = this.props
      let imageWidth = image.width,
           imageHeight = image.height,
           width = this.props.available_width.width,
           coeff = image.width/image.height,
-          height = width/coeff;
-     // fit raster into original image size
-     image.fitBounds(width, 0, imageWidth, imageHeight)
-     // if image is already loaded
-     // do not attempt to fit it again
-     if (this._imageLoaded) {
+          height = parseInt(width/coeff);
+     if (this.state.imageLoaded) {
        return
      }
-     // calculate zoom
      const wr = width / imageWidth
      const hr = height / imageHeight
      const zoom = wr < hr ? wr : hr
-     image.fitBounds(-700, 0, imageWidth, imageHeight)
-     // calculate new image size
      const iw = imageWidth * zoom
      const ih = imageHeight * zoom
-     // calculate needed translation xy
+
+     this._view.paper.view.setCenter(0,0)
+
+     image.fitBounds(-width/2/zoom,-height/2/zoom, imageWidth, imageHeight)
      const tx = (width-iw) / 2 / zoom
      const ty = (height-ih) / 2 / zoom
-     // calculate center xy
      const x = this.state.x + tx
      const y = this.state.y + ty
-     // center the image in the middle
-     this.setState({ tx, ty, x, y, zoom, width, height }, () => {
-       // TODO: try to find a better solution
-       // reset translation xy to prevent zoom problems
-       // this.setState({ tx: 0, ty: 0 })
-     })
-     // set image loaded
-     this._imageLoaded = true
+     this.setState({ tx, ty, x, y, zoom, width, height })
+     this.state.imageLoaded = true
    }
 
   imageLoaded(image){
@@ -119,9 +110,25 @@ this.handleClick = this.handleClick.bind(this);
   }
   handleEnter(e){
    e.target.opacity = 1
+   this.setState({
+     showPin: true,
+     hoverArea: this.props.valuesObj[e.target.data.id]
+   })
+   document.body.style.cursor = "pointer";
   }
   handleLeave(e){
     e.target.opacity = 0
+    this.setState({
+      showPin: false,
+      hoverArea: {}
+    })
+        document.body.style.cursor = "default";
+  }
+  handleMouseMove(e){
+    let pinHeight = this.refs.pin.getBoundingClientRect().height;
+    this.refs.pin.style.left = e.event.clientX +'px';
+    this.refs.pin.style.top = e.event.clientY-(pinHeight/2) +'px';
+
   }
   render() {
     const {
@@ -129,9 +136,6 @@ this.handleClick = this.handleClick.bind(this);
     } = this.props
 
     const { loaded, imageLoaded, width, height } = this.state
-
-
-
     const layerProps = {
       initialData,
       activeLayer,
@@ -169,6 +173,7 @@ this.handleClick = this.handleClick.bind(this);
             {...props}
             onMouseDown={this.handleClick}
             onMouseEnter={this.handleEnter}
+            onMouseMove={this.handleMouseMove}
             onMouseLeave={this.handleLeave}
             data={{id: itemId, type: Item, ololo: '2'}}
           />
@@ -176,13 +181,30 @@ this.handleClick = this.handleClick.bind(this);
           </Layer>
         </View>
 
-
-
-
+        <div ref="pin"  className={`pin-info ${this.state.showPin && 'show'}`}>
+          <h3>{this.state.hoverArea.name}</h3>
+          <div className="total-info desc">
+            <span>Buildings</span><b>{this.state.hoverArea.total_quantity}</b>
+          </div>
+          <div className="free-info desc">
+          <span>Free</span><b>{this.state.hoverArea.available_quantity}</b>
+          </div>
+          <div className="booked-info desc">
+          <span>Booked</span><b>{this.state.hoverArea.booked_quantity}</b>
+          </div>
+          <div className="sold-info desc">
+          <span>Sold</span><b>{this.state.hoverArea.sold_quantity}</b>
+          </div>
+        </div>
       </div>
     )
   }
 }
-
-export default compose(
+function mapStateToProps(state){
+	return {
+		valuesObj: state.projectData.dataObj.values
+	}
+};
+export default connect(
+  mapStateToProps
 )(Paper)

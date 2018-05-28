@@ -58,7 +58,7 @@ class Viewer extends Component {
   render() {
     const {  mounted } = this.state
     const box = this._box && this._box.getBoundingClientRect()
-
+    console.log(box)
     return (
       <div className="Viewer-component" ref={ref => this._box = ref}>
         {mounted &&

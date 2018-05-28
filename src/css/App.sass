@@ -1,3 +1,8 @@
+@import "./var.sass"
+
+
+.Viewer-container
+  position: relative
 .Viewer-wrapper
   height: 700px
   position: relative
@@ -5,7 +10,85 @@
     min-height: 650px
   .info
     position: absolute
-    left: 0
+    right: 0
     top: 0
     background-color: rgba(0,0,0,.6)
     color: #fff
+  .pin-info
+    width: 250px
+    padding: 15px 40px 15px 60px
+    position: fixed
+    left: 30px
+    top: 0
+    opacity: 0
+    visibility: hidden
+    transition: opacity 0.3s ease, visibility 0.3s ease
+    background-color: #ffffff
+    pointer-events: none
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3)
+    margin-left: 25px
+    &:before
+      position: absolute
+      left: -10px
+      content: ''
+      top: 50%
+      margin-top: -7px
+      width: 0
+      height: 0
+      border-style: solid
+      border-width: 7.5px 10px 7.5px 0
+      border-color: transparent #fff transparent transparent
+    &.show
+      opacity: 1
+      visibility: visible
+    h2
+      font-size: 20px
+      font-weight: 600
+      marign: 0
+      color: #344763
+
+    .desc
+      color: #5a5a5a
+      font-size: 14px
+      height: 23px
+      line-height: 23px
+      margin: 5px 0
+      position: relative
+      &:before
+        position: absolute
+        left: -35px
+        top: 3  px
+        content: ''
+        height: 16px
+        width: 16px
+        background-position: center
+        background-repeat: no-repeat
+        background-size: contain
+      span
+        width: 115px
+        display: inline-block
+      b
+        display: inline-block
+        font-weight: normal
+    .total-info
+      padding-bottom: 12px
+      margin-bottom: 15px
+      height: auto
+      border-bottom: solid 1px #e1e1e1
+      &:before
+        background-image: url(../img/home.svg )
+    .free-info
+      &:before
+        background-image: url(../img/tick.svg)
+    .sold-info
+      color: #d6dae0
+      &:before
+        top: 3px
+        background-image: url(../img/sold_ic.svg)
+    .booked-info
+      color: $main_orange
+      &:before
+        width: 17px
+        height: 17px
+        background-image: url(../img/booked_ic.svg)
+        top: 2px

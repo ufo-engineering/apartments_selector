@@ -1,0 +1,140 @@
+.open-filter {
+  position: absolute;
+  right: 100%;
+  width: 59px;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+  top: 0;
+  background-color: transparent;
+  border: 1px solid #344763;
+  border-right: none;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0; }
+  .open-filter:hover i {
+    background-color: #fff; }
+    .open-filter:hover i:after, .open-filter:hover i:before {
+      background-color: #fff; }
+  .open-filter:hover:before {
+    width: 160%; }
+  .open-filter:before {
+    position: absolute;
+    left: -20%;
+    top: -10%;
+    width: 0%;
+    content: '';
+    height: 120%;
+    background-color: #344763;
+    -moz-transform: skew(-25deg);
+    -ms-transform: skew(-25deg);
+    -webkit-transform: skew(-25deg);
+    -o-transform: skew(-25deg);
+    transform: skew(-25deg);
+    transition: all 0.3s ease-out; }
+  .open-filter i {
+    display: inline-block;
+    width: 30px;
+    top: -2px;
+    height: 1px;
+    vertical-align: middle;
+    transition: all 0.3s ease-out;
+    position: relative;
+    background-color: #344763; }
+    .open-filter i:after {
+      top: -7px; }
+    .open-filter i:before {
+      top: 7px; }
+    .open-filter i:after, .open-filter i:before {
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease-out;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background-color: #344763; }
+
+.filter-wrp {
+  top: 0;
+  right: 100%;
+  opacity: 0;
+  visibility: hidden;
+  width: 290px;
+  margin-left: 0;
+  transition: all 0.3s ease;
+  position: fixed;
+  z-index: 999; }
+  .filter-wrp.show {
+    margin-right: -290px;
+    opacity: 1;
+    visibility: visible; }
+
+.filter-component {
+  background-color: #fff;
+  display: block; }
+  .filter-component .filter-head {
+    position: relative; }
+    .filter-component .filter-head h3 {
+      height: 46px;
+      background-color: #2e4460;
+      color: #fff;
+      margin: 0;
+      line-height: 46px;
+      padding: 0 22px;
+      text-transform: capitalize;
+      font-size: 20px;
+      font-weight: 600; }
+    .filter-component .filter-head .filter-closer {
+      position: absolute;
+      height: 100%;
+      width: 46px;
+      border: none;
+      top: 0;
+      line-height: 46px;
+      right: 0;
+      padding: 0 10px;
+      background-color: transparent;
+      cursor: pointer; }
+      .filter-component .filter-head .filter-closer:active i {
+        -moz-transform: rotate(-45deg) scale(0.7);
+        -ms-transform: rotate(-45deg) scale(0.7);
+        -webkit-transform: rotate(-45deg) scale(0.7);
+        -o-transform: rotate(-45deg) scale(0.7);
+        transform: rotate(-45deg) scale(0.7); }
+    .filter-component .filter-head i {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      display: inline-block;
+      background-color: #fff;
+      transition: all 0.3s ease;
+      vertical-align: middle;
+      -moz-transform: rotate(-45deg) scale(1);
+      -ms-transform: rotate(-45deg) scale(1);
+      -webkit-transform: rotate(-45deg) scale(1);
+      -o-transform: rotate(-45deg) scale(1);
+      transform: rotate(-45deg) scale(1); }
+      .filter-component .filter-head i:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: '';
+        background-color: #fff;
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg); }
+  .filter-component .filter-table {
+    width: 100%;
+    text-align: center;
+    padding: 0 20px; }
+    .filter-component .filter-table .thead {
+      border-bottom: 1px solid #e1e1e1;
+      color: #a1a1a1;
+      font-size: 14px;
+      line-height: 47px;
+      height: 47px;
+      font-weight: normal; }

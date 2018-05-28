@@ -12,7 +12,7 @@ import {
 import {Link} from 'react-router-dom'
 import Header from './Header.jsx';
 import Viewer from './Viewer.jsx'
-import Loader from './Loader.jsx'
+import Filter from './Filter.jsx'
 
 
 
@@ -22,13 +22,17 @@ class App extends PureComponent {
 		super(props)
 		this.state = {
 			loaded: false,
-			pageArr: []
+			pageArr: [],
+			showFilter: false
+
 		}
+
 		this.dispatchFetchData = this.dispatchFetchData.bind(this);
 		this.testH = this.testH.bind(this);
 		this.fetchData = this.fetchData.bind(this);
 		this.historyBack = this.historyBack.bind(this);
 		this.goTo = this.goTo.bind(this);
+		this.filterEvent = this.filterEvent.bind(this);
 	}
 	componentDidMount(){
 		let pageArr = this.props.match.url.substr(1).split('/');
@@ -77,6 +81,9 @@ class App extends PureComponent {
 	historyBack(){
 		this.props.history.goBack()
 	}
+	filterEvent(){
+		this.setState({showFilter: !this.state.showFilter})
+	}
 	render() {
 	  return (
 		<div className="Viewer-container">
@@ -84,12 +91,14 @@ class App extends PureComponent {
 		<div  className="Viewer-wrapper">
 		<h2 className="info">{this.props.match.params.id}</h2>
 			{this.state.loaded && <Viewer chooseEvent={this.goTo}/>}
-
+			<button className="open-filter" onClick={this.filterEvent}>
+			<i/>
+			</button>
 		</div>
 
-			<Link to="/buildings/1444" className="default-btn">buildings</Link>
-			<Link to="/areas/5648" className="default-btn">area</Link>
-
+		<div className={`filter-wrp ${this.state.showFilter && 'show'}`}>
+			<Filter closeEvent={this.filterEvent} />
+		</div>
 		</div>
 	  );
 	}
