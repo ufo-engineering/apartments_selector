@@ -14,6 +14,33 @@
   cursor: pointer
   overflow: hidden
   padding: 0
+  &.opened
+    &:before
+      width: 160%
+    &:hover
+      i:after
+        background-color: transparent
+    i
+      -moz-transform: rotate(-225deg)
+      -ms-transform: rotate(-225deg)
+      -webkit-transform: rotate(-225deg)
+      -o-transform: rotate(-225deg)
+      transform: rotate(-225deg)
+      background-color: #fff
+      &:before
+        -moz-transform: rotate(-90deg)
+        -ms-transform: rotate(-90deg)
+        -webkit-transform: rotate(-90deg)
+        -o-transform: rotate(-90deg)
+        transform: rotate(-90deg)
+        top: 0
+        background-color: #fff
+      &:after
+        background-color: transparent
+  &:active
+    border-color: $main_orange
+    &:before
+        background-color: $main_orange !important
   &:hover
     i
       background-color: #fff
@@ -38,7 +65,7 @@
     transition: all 0.3s ease-out
   i
     display: inline-block
-    width: 30px
+    width: 23px
     top: -2px
     height: 1px
     vertical-align: middle
@@ -58,11 +85,6 @@
         height: 100%
         content: ''
         background-color: $main_blue
-        // -moz-transform: rotate(90deg)
-        // -ms-transform: rotate(90deg)
-        // -webkit-transform: rotate(90deg)
-        // -o-transform: rotate(90deg)
-        // transform: rotate(90deg)
 
 .filter-wrp
   top: 0
@@ -74,6 +96,7 @@
   transition: all 0.3s ease
   position: fixed
   z-index: 999
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
   &.show
     margin-right: -290px
     opacity: 1
@@ -140,11 +163,27 @@
   .filter-table
     width: 100%
     text-align: center
-    padding: 0 20px
-    .thead
+    .filter-tbody
+      padding: 0 10px
+      .row
+        height: 37px
+        line-height: 37px
+        font-size: 16px
+        color: #5a5a5a
+        margin: 0
+        &:hover
+          background-color: #f0f2f5
+          cursor: pointer
+        &.booked
+          color: $main_orange
+        &.sold
+          color: #d6dae0
+          pointer-events: none
+    .filter-thead
       border-bottom: 1px solid #e1e1e1
       color: #a1a1a1
       font-size: 14px
+      margin: 0
       line-height: 47px
       height: 47px
       font-weight: normal

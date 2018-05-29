@@ -28,6 +28,17 @@
        "booked_quantity": 1,
        "sold_quantity": 0,
        "mask_coords": ["M365,3.5l47,-191l-53,-136l-34,126l-11,109z"]
+    },
+    "898": {
+      "name": "ololo3",
+      "status": "2",
+      "price": 458,
+      "area": 48,
+       "total_quantity": 14,
+       "available_quantity": 11,
+       "booked_quantity": 12,
+       "sold_quantity": 2,
+       "mask_coords": ["M323,-196.5v0l-218,153l52,56l270,-58l47,-191l-53,-131l-34,126l-11,109l-23,7l-22,-41z", "M-25,-261.11111v0l-186,153l422,44l-73,-203l-108,100z", "M-61,-64.5l-40,42l-20,109l173,-23l172,-139l-103,-127l-120,102l-20,64l-20,16z"]
     }
   }
 }

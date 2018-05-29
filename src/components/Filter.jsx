@@ -36,24 +36,30 @@ class Filter extends PureComponent {
             ><i/></button>
         </div>
         <div className="filter-table">
-          <div className="row thead">
+          <div className="row filter-thead">
               <div className="col-4">ID</div>
               <div className="col-4">Area (m2)</div>
               <div className="col-4">Price (€)</div>
           </div>
 
-          {this.state.project&&this.state.project.values&&
-          Object.keys(this.state.project.values).map((key, id)=>{
-              return(
-                <div key={id} className="row">
-                  <div className="col-4">{key}</div>
-                  <div className="col-4">{this.state.project.values[key].area}</div>
-                  <div className="col-4">{this.state.project.values[key].price}</div>
-                </div>
-              )
-            })
+          <div className="filter-tbody">
+            {this.state.project&&this.state.project.values&&
+            Object.keys(this.state.project.values).map((key, id)=>{
+              let item = this.state.project.values[key];
+                return(
+                  <div key={id}
+                  className={`row ${item.status == 0 ?
+                    'sold' :  item.status == 2 ? 'booked' : ''
+                  }`}>
+                    <div className="col-4">{key}</div>
+                    <div className="col-4">{item.area}</div>
+                    <div className="col-4">{item.price}</div>
+                  </div>
+                )
+              })
 
-        }
+          }
+          </div>
         </div>
       </div>
     )

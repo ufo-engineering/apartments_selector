@@ -24,6 +24,7 @@ class Paper extends Component {
       loaded: false,
       showLayers: true,
       childArr: [],
+      showWithStatus: this.props.showOnlyStatus || null,
       hoverArea: {},
       showPin: false,
       sx: 0, // scale center x
@@ -41,10 +42,17 @@ class Paper extends Component {
     this.childrenCreate = this.childrenCreate.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.handleLeave = this.handleLeave.bind(this);
-		this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+		this.visibleOrNot = this.visibleOrNot.bind(this);
 
   }
+  componentWillReceiveProps(newProps){
+    if(newProps.showOnlyStatus != this.state.showWithStatus){
+      console.log(newProps.showOnlyStatus, this.state.showWithStatus)
+      this.setState({showWithStatus: newProps.showOnlyStatus})
 
+    }
+  }
   fitImage(image){
      let imageWidth = image.width,
           imageHeight = image.height,
@@ -67,8 +75,7 @@ class Paper extends Component {
      const ty = (height-ih) / 2 / zoom
      const x = this.state.x + tx
      const y = this.state.y + ty
-     this.setState({ tx, ty, x, y, zoom, width, height })
-     this.state.imageLoaded = true
+     this.setState({ tx, ty, x, y, zoom, width, height, imageLoaded :true})
    }
 
   imageLoaded(image){
@@ -78,23 +85,41 @@ class Paper extends Component {
       loaded: true
     })
   }
+  colorDetecter(val){
+    if(val=== 1 ){
+      return 'rgba(167, 195, 103, .5)'; //free
+    }else if(val=== 2){
+      return 'rgba(232, 104, 2,.4)' //booked
+    }else{
+      return 'rgba(214, 218, 224,.6)' //sold
+    }
+  }
+  visibleOrNot(status){
+    if( this.state.showWithStatus == status){
+      return 1
+    }else{
+      return 0
+    }
+  }
   childrenCreate(values){
     let childArr = [];
     if (Object.values(values).length === 0) return;
     for(let key in values){
-      let color = parseInt(values[key]['status']) === 1 ? 'rgba(0,255,0,0.4)': 'rgba(255,0,0,0.4)'
+
+      let color = this.colorDetecter(parseInt(values[key]['status'])),
+          status = values[key]['status'];
       childArr.push({
           "id": key,
-          "bookStatus": values[key]['status'],
+          "bookStatus": status,
           "type": "Path",
           "fillColor": color,
           "closed": true,
-          "opacity": 0,
+          "opacity":  this.visibleOrNot(status),
           "strokeWidth": 0,
           "pathData": values[key]['mask_coords'][0]
         })
     }
-    this.setState({childArr: childArr})
+    return childArr
   }
   componentWillUpdate(nextProps) {
     const { image } = this.props
@@ -103,7 +128,8 @@ class Paper extends Component {
     }
   }
   componentDidMount(){
-    this.childrenCreate(this.props.values)
+
+    this.setState({showStatus: this.props.showOnlyStatus})
   }
   handleClick(e){
     this.props.selectMask(e.target.data.id)
@@ -117,10 +143,9 @@ class Paper extends Component {
    document.body.style.cursor = "pointer";
   }
   handleLeave(e){
-    e.target.opacity = 0
+    e.target.opacity = this.visibleOrNot(e.target.bookStatus)
     this.setState({
-      showPin: false,
-      hoverArea: {}
+      showPin: false
     })
         document.body.style.cursor = "default";
   }
@@ -131,6 +156,7 @@ class Paper extends Component {
 
   }
   render() {
+    console.log('asdasd')
     const {
       activeTool,activeLayer, image, initialData, selectedItem
     } = this.props
@@ -166,7 +192,11 @@ class Paper extends Component {
         </Layer>
         <Layer
           data={{type: "Layer"}}>
-          {this.state.childArr.map(({ id: itemId, type: Item, ...props }) =>
+          {this.childrenCreate(this.props.valuesObj).map(({
+            id: itemId,
+            type: Item,
+            ...props
+          }) =>
           <Item
             key={itemId}
             id={itemId}
@@ -175,7 +205,7 @@ class Paper extends Component {
             onMouseEnter={this.handleEnter}
             onMouseMove={this.handleMouseMove}
             onMouseLeave={this.handleLeave}
-            data={{id: itemId, type: Item, ololo: '2'}}
+            data={{id: itemId, type: Item}}
           />
         )}
           </Layer>
@@ -202,7 +232,9 @@ class Paper extends Component {
 }
 function mapStateToProps(state){
 	return {
-		valuesObj: state.projectData.dataObj.values
+		valuesObj: state.projectData.dataObj.values,
+    image: state.projectData.dataObj.imagePath,
+    showOnlyStatus: state.filterData.statusFilter
 	}
 };
 export default connect(

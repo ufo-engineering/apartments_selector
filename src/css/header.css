@@ -32,6 +32,8 @@
   .header-component .active-header {
     padding: 27px 40px;
     line-height: 36px; }
+    .header-component .active-header div {
+      padding: 0; }
     .header-component .active-header span {
       display: inline-block;
       vertical-align: middle;
@@ -64,3 +66,41 @@
       border-right: 1px solid #e1e1e1; }
     .header-component .project-header .right {
       text-align: left; }
+  .header-component .status-filter button {
+    line-height: normal;
+    padding: 0;
+    margin: 0;
+    color: #5a5a5a;
+    font-size: 16px;
+    display: inline-block;
+    line-height: 19px;
+    height: 19px;
+    border: none;
+    background-color: transparent;
+    vertical-align: middle;
+    margin-right: 23px;
+    cursor: pointer; }
+    .header-component .status-filter button.active:before {
+      border-color: #e86802; }
+    .header-component .status-filter button:hover {
+      color: #344763; }
+    .header-component .status-filter button.free-btn:before {
+      background-color: #a7c367; }
+    .header-component .status-filter button.booked-btn:before {
+      background-color: #fab57e; }
+    .header-component .status-filter button.sold-btn:before {
+      background-color: #d6dae0; }
+    .header-component .status-filter button:last-child {
+      margin-right: 0; }
+    .header-component .status-filter button:before {
+      display: inline-block;
+      width: 19px;
+      height: 19px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      margin-right: 9px;
+      content: '';
+      position: relative;
+      top: -1px;
+      background-color: red;
+      vertical-align: middle; }

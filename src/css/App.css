@@ -6,12 +6,6 @@
   position: relative; }
   .Viewer-wrapper .viewr-wrp {
     min-height: 650px; }
-  .Viewer-wrapper .info {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #fff; }
   .Viewer-wrapper .pin-info {
     width: 250px;
     padding: 15px 40px 15px 60px;

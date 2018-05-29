@@ -14,7 +14,6 @@ class Viewer extends Component {
     super(props)
     this.state = {
       mounted: false,
-      imagePath : this.props.imagePath || ''
     }
     this._box = null
     this._request = null
@@ -40,8 +39,7 @@ class Viewer extends Component {
 
   componentDidMount() {
     this.setState({
-      mounted: true,
-      values: this.props.maskValues
+      mounted: true
      })
     // window.addEventListener('resize', this.resizeWindow)
   }
@@ -49,24 +47,21 @@ class Viewer extends Component {
     this.props.chooseEvent([this.props.daughters,id])
   }
   componentWillUnmount() {
-    if (this._request) {
-      cancelAnimationFrame(this._request)
-      this._request = null
-    }
-    // window.removeEventListener('resize', this.resizeWindow)
+    // if (this._request) {
+    //   cancelAnimationFrame(this._request)
+    //   this._request = null
+    // }
+    // // window.removeEventListener('resize', this.resizeWindow)
   }
   render() {
     const {  mounted } = this.state
     const box = this._box && this._box.getBoundingClientRect()
-    console.log(box)
     return (
       <div className="Viewer-component" ref={ref => this._box = ref}>
         {mounted &&
           <Paper
             available_width={box}
-            values={this.state.values}
             selectMask={this.redirectEvent}
-            image={this.state.imagePath}
           />}
       </div>
     )
@@ -75,8 +70,6 @@ class Viewer extends Component {
 }
 function mapStateToProps(state){
 	return {
-    imagePath: state.projectData.dataObj.imagePath,
-    maskValues: state.projectData.dataObj.values,
 		daughters: state.projectData.dataObj.contain
 	}
 };
