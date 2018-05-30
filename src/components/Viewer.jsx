@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Paper from './Paper/Paper'
 
 import { connect } from 'react-redux'
@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 
 
 
-class Viewer extends Component {
+class Viewer extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -41,17 +41,17 @@ class Viewer extends Component {
     this.setState({
       mounted: true
      })
-    // window.addEventListener('resize', this.resizeWindow)
+    window.addEventListener('resize', this.resizeWindow)
   }
   redirectEvent(id){
     this.props.chooseEvent([this.props.daughters,id])
   }
   componentWillUnmount() {
-    // if (this._request) {
-    //   cancelAnimationFrame(this._request)
-    //   this._request = null
-    // }
-    // // window.removeEventListener('resize', this.resizeWindow)
+    if (this._request) {
+      cancelAnimationFrame(this._request)
+      this._request = null
+    }
+    window.removeEventListener('resize', this.resizeWindow)
   }
   render() {
     const {  mounted } = this.state

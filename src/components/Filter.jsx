@@ -22,7 +22,6 @@ class Filter extends PureComponent {
     })
   }
   handleClose(){
-    console.log('ewew')
     this.props.closeEvent()
   }
   render(){
@@ -51,7 +50,7 @@ class Filter extends PureComponent {
                   className={`row ${item.status == 0 ?
                     'sold' :  item.status == 2 ? 'booked' : ''
                   }`}>
-                    <div className="col-4">{key}</div>
+                    <div className="col-4">{item.name}</div>
                     <div className="col-4">{item.area}</div>
                     <div className="col-4">{item.price}</div>
                   </div>

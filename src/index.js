@@ -27,8 +27,8 @@ ReactDOM.render(
 			<div className="container">
 				<Route path="/" exact component={App}/>
 				<Route path="/project/:id" component={App}/>
-				<Route path="/areas/:id" component={App}/>
-				<Route path="/buildings/:id" component={App}/>
+				<Route path="/area/:id" component={App}/>
+				<Route path="/building/:id" component={App}/>
 				<Route path="/apartments/:id" component={App}/>
 			</div>
 		</Router>

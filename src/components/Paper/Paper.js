@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pick from 'lodash.pick'
@@ -11,11 +11,9 @@ import {
 import Loader from '../Loader.jsx'
 
 
-class Paper extends Component {
+class Paper extends PureComponent {
 
-  static propTypes = {
-    image: PropTypes.any.isRequired
-  }
+
 
   constructor(props) {
     super(props)
@@ -43,14 +41,16 @@ class Paper extends Component {
     this.handleEnter = this.handleEnter.bind(this);
     this.handleLeave = this.handleLeave.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
-		this.visibleOrNot = this.visibleOrNot.bind(this);
+    this.visibleOrNot = this.visibleOrNot.bind(this);
+		this.injectToPin = this.injectToPin.bind(this);
 
   }
+
+
+
   componentWillReceiveProps(newProps){
     if(newProps.showOnlyStatus != this.state.showWithStatus){
-      console.log(newProps.showOnlyStatus, this.state.showWithStatus)
       this.setState({showWithStatus: newProps.showOnlyStatus})
-
     }
   }
   fitImage(image){
@@ -75,15 +75,14 @@ class Paper extends Component {
      const ty = (height-ih) / 2 / zoom
      const x = this.state.x + tx
      const y = this.state.y + ty
-     this.setState({ tx, ty, x, y, zoom, width, height, imageLoaded :true})
+     this.setState({
+       tx, ty, x, y, zoom, width, height,
+       loaded: true,
+       imageLoaded :true})
    }
 
   imageLoaded(image){
     this.fitImage(image)
-    this.setState({
-      imageLoaded: true,
-      loaded: true
-    })
   }
   colorDetecter(val){
     if(val=== 1 ){
@@ -102,6 +101,7 @@ class Paper extends Component {
     }
   }
   childrenCreate(values){
+    console.log(values)
     let childArr = [];
     if (Object.values(values).length === 0) return;
     for(let key in values){
@@ -116,7 +116,7 @@ class Paper extends Component {
           "closed": true,
           "opacity":  this.visibleOrNot(status),
           "strokeWidth": 0,
-          "pathData": values[key]['mask_coords'][0]
+          "pathData": values[key]['masks'][0]
         })
     }
     return childArr
@@ -134,11 +134,24 @@ class Paper extends Component {
   handleClick(e){
     this.props.selectMask(e.target.data.id)
   }
+  injectToPin(obj){
+    let pin = this.refs.pin,
+        total = pin.querySelector('.total-info b'),
+        free = pin.querySelector('.free-info b'),
+        booked = pin.querySelector('.booked-info b'),
+        sold =pin.querySelector('.sold-info b'),
+        ttl = pin.querySelector('h3');
+        ttl.innerHTML = obj.name;
+        total.innerHTML = obj.total;
+        free.innerHTML = obj.available || '';
+        booked.innerHTML = obj.booked || '';
+        sold.innerHTML = obj.sold || '';
+  }
   handleEnter(e){
    e.target.opacity = 1
+   this.injectToPin(this.props.valuesObj[e.target.data.id]);
    this.setState({
      showPin: true,
-     hoverArea: this.props.valuesObj[e.target.data.id]
    })
    document.body.style.cursor = "pointer";
   }
@@ -156,7 +169,7 @@ class Paper extends Component {
 
   }
   render() {
-    console.log('asdasd')
+    // console.log(this.state)
     const {
       activeTool,activeLayer, image, initialData, selectedItem
     } = this.props
@@ -192,21 +205,23 @@ class Paper extends Component {
         </Layer>
         <Layer
           data={{type: "Layer"}}>
-          {this.childrenCreate(this.props.valuesObj).map(({
-            id: itemId,
-            type: Item,
-            ...props
-          }) =>
-          <Item
-            key={itemId}
-            id={itemId}
-            {...props}
-            onMouseDown={this.handleClick}
-            onMouseEnter={this.handleEnter}
-            onMouseMove={this.handleMouseMove}
-            onMouseLeave={this.handleLeave}
-            data={{id: itemId, type: Item}}
-          />
+
+          {!Array.isArray(this.props.valuesObj) &&
+            this.childrenCreate(this.props.valuesObj).map(({
+              id: itemId,
+              type: Item,
+              ...props
+            }) =>
+            <Item
+              key={itemId}
+              id={itemId}
+              {...props}
+              onMouseDown={this.handleClick}
+              onMouseEnter={this.handleEnter}
+              onMouseMove={this.handleMouseMove}
+              onMouseLeave={this.handleLeave}
+              data={{id: itemId, type: Item}}
+            />
         )}
           </Layer>
         </View>
@@ -214,16 +229,16 @@ class Paper extends Component {
         <div ref="pin"  className={`pin-info ${this.state.showPin && 'show'}`}>
           <h3>{this.state.hoverArea.name}</h3>
           <div className="total-info desc">
-            <span>Buildings</span><b>{this.state.hoverArea.total_quantity}</b>
+            <span>Buildings</span><b/>
           </div>
           <div className="free-info desc">
-          <span>Free</span><b>{this.state.hoverArea.available_quantity}</b>
+          <span>Free</span><b/>
           </div>
           <div className="booked-info desc">
-          <span>Booked</span><b>{this.state.hoverArea.booked_quantity}</b>
+          <span>Booked</span><b/>
           </div>
           <div className="sold-info desc">
-          <span>Sold</span><b>{this.state.hoverArea.sold_quantity}</b>
+          <span>Sold</span><b/>
           </div>
         </div>
       </div>
@@ -233,7 +248,7 @@ class Paper extends Component {
 function mapStateToProps(state){
 	return {
 		valuesObj: state.projectData.dataObj.values,
-    image: state.projectData.dataObj.imagePath,
+    image: state.projectData.dataObj['images'],
     showOnlyStatus: state.filterData.statusFilter
 	}
 };

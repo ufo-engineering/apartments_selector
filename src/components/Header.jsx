@@ -61,7 +61,7 @@ class Header extends PureComponent {
         </div>
         <div className="col-md-6 right">
           <span>
-            Remaining free: {this.state.project.free}
+            Remaining free: {this.state.project.available}
           </span>
         </div>
       </div>
@@ -80,7 +80,7 @@ class Header extends PureComponent {
           </span>
           <i className="delimiter" />
           <span>
-            Remaining free: {this.state.project.free}
+            Remaining free: {this.state.project.available}
           </span>
         </div>
         <div className="col-3">
