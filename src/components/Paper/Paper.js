@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import pick from 'lodash.pick'
-
-import {
-  Layer, Raster, View,
-  Circle, Path, Rectangle,
-} from 'react-paper-bindings'
+import {Layer, Raster, View,} from 'react-paper-bindings'
 
 import Loader from '../Loader.jsx'
+import Pin from './Pin.jsx'
 
 
 class Paper extends PureComponent {
@@ -19,7 +14,6 @@ class Paper extends PureComponent {
     super(props)
     this.state = {
       imageLoaded: false,
-      loaded: false,
       showLayers: true,
       childArr: [],
       showWithStatus: this.props.showOnlyStatus || null,
@@ -42,14 +36,13 @@ class Paper extends PureComponent {
     this.handleLeave = this.handleLeave.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.visibleOrNot = this.visibleOrNot.bind(this);
-		this.injectToPin = this.injectToPin.bind(this);
 
   }
 
 
 
   componentWillReceiveProps(newProps){
-    if(newProps.showOnlyStatus != this.state.showWithStatus){
+    if(+newProps.showOnlyStatus !== +this.state.showWithStatus){
       this.setState({showWithStatus: newProps.showOnlyStatus})
     }
   }
@@ -58,7 +51,7 @@ class Paper extends PureComponent {
           imageHeight = image.height,
           width = this.props.available_width.width,
           coeff = image.width/image.height,
-          height = parseInt(width/coeff);
+          height = parseInt((width/coeff), 10);
      if (this.state.imageLoaded) {
        return
      }
@@ -94,19 +87,19 @@ class Paper extends PureComponent {
     }
   }
   visibleOrNot(status){
-    if( this.state.showWithStatus == status){
+    if(this.props.pager.currentPage[0]==='project') return 0
+    if( +this.state.showWithStatus === +status){
       return 1
     }else{
       return 0
     }
   }
   childrenCreate(values){
-    console.log(values)
     let childArr = [];
     if (Object.values(values).length === 0) return;
     for(let key in values){
 
-      let color = this.colorDetecter(parseInt(values[key]['status'])),
+      let color = this.colorDetecter(parseInt(values[key]['status'], 10)),
           status = values[key]['status'];
       childArr.push({
           "id": key,
@@ -134,24 +127,12 @@ class Paper extends PureComponent {
   handleClick(e){
     this.props.selectMask(e.target.data.id)
   }
-  injectToPin(obj){
-    let pin = this.refs.pin,
-        total = pin.querySelector('.total-info b'),
-        free = pin.querySelector('.free-info b'),
-        booked = pin.querySelector('.booked-info b'),
-        sold =pin.querySelector('.sold-info b'),
-        ttl = pin.querySelector('h3');
-        ttl.innerHTML = obj.name;
-        total.innerHTML = obj.total;
-        free.innerHTML = obj.available || '';
-        booked.innerHTML = obj.booked || '';
-        sold.innerHTML = obj.sold || '';
-  }
+
   handleEnter(e){
    e.target.opacity = 1
-   this.injectToPin(this.props.valuesObj[e.target.data.id]);
    this.setState({
      showPin: true,
+     hoverInfo: this.props.valuesObj[e.target.data.id]
    })
    document.body.style.cursor = "pointer";
   }
@@ -170,21 +151,13 @@ class Paper extends PureComponent {
   }
   render() {
     // console.log(this.state)
-    const {
-      activeTool,activeLayer, image, initialData, selectedItem
-    } = this.props
+    const {image} = this.props
 
-    const { loaded, imageLoaded, width, height } = this.state
-    const layerProps = {
-      initialData,
-      activeLayer,
-      selectedItem,
-      selectItem: this.props.selectItem,
-    }
+    const { imageLoaded} = this.state
+
     const viewProps = Object.assign({} ,this.props,{
       ref: ref => this._view = ref,
       onWheel: this.props.moveToolMouseWheel,
-      activeTool: 'select',
       width: this.state.width || 150,
       height: this.state.height || 150,
       matrix: {
@@ -205,7 +178,6 @@ class Paper extends PureComponent {
         </Layer>
         <Layer
           data={{type: "Layer"}}>
-
           {!Array.isArray(this.props.valuesObj) &&
             this.childrenCreate(this.props.valuesObj).map(({
               id: itemId,
@@ -225,21 +197,8 @@ class Paper extends PureComponent {
         )}
           </Layer>
         </View>
-
         <div ref="pin"  className={`pin-info ${this.state.showPin && 'show'}`}>
-          <h3>{this.state.hoverArea.name}</h3>
-          <div className="total-info desc">
-            <span>Buildings</span><b/>
-          </div>
-          <div className="free-info desc">
-          <span>Free</span><b/>
-          </div>
-          <div className="booked-info desc">
-          <span>Booked</span><b/>
-          </div>
-          <div className="sold-info desc">
-          <span>Sold</span><b/>
-          </div>
+          <Pin hoverInfo={this.state.hoverInfo}/>
         </div>
       </div>
     )
@@ -249,6 +208,7 @@ function mapStateToProps(state){
 	return {
 		valuesObj: state.projectData.dataObj.values,
     image: state.projectData.dataObj['images'],
+    pager: state.pagerData,
     showOnlyStatus: state.filterData.statusFilter
 	}
 };

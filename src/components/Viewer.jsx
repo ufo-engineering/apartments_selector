@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import Paper from './Paper/Paper'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 
 
@@ -32,11 +31,9 @@ class Viewer extends PureComponent {
     this.forceUpdate()
     this._request = null
   }
-
   setImageSize = ({ size }) => {
     this.setState({ imageSize: size })
   }
-
   componentDidMount() {
     this.setState({
       mounted: true

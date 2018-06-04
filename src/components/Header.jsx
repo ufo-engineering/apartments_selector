@@ -4,7 +4,6 @@ import '../css/header.css';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {statusFilter} from '../actions/actions.js';
-import {Link, History } from 'react-router-dom'
 
 
 class Header extends PureComponent {
@@ -31,14 +30,14 @@ class Header extends PureComponent {
     this.props.historyBack()
   }
   statusFilterOut(e){
-    if(e.currentTarget.value == this.props.showOnlyStatus){
+    if(e.currentTarget.value === this.props.showOnlyStatus){
       this.props.statusFilter(null);
       return
     }
     this.props.statusFilter(e.currentTarget.value)
   }
   activeFilterBtn(val){
-    if(this.props.showOnlyStatus == val) return 'active';
+    if(this.props.showOnlyStatus === val) return 'active';
   }
   render() {
     let history = this.state.history,

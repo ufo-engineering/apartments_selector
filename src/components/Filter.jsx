@@ -2,9 +2,6 @@ import React, { PureComponent } from 'react';
 import '../css/Filter.css';
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-// import {actFirst,actSec} from '../actions/actions.js';
-// import {Link } from 'react-router-dom'
 
 
 class Filter extends PureComponent {
@@ -47,8 +44,8 @@ class Filter extends PureComponent {
               let item = this.state.project.values[key];
                 return(
                   <div key={id}
-                  className={`row ${item.status == 0 ?
-                    'sold' :  item.status == 2 ? 'booked' : ''
+                  className={`row ${item.status === 0 ?
+                    'sold' :  item.status === 2 ? 'booked' : ''
                   }`}>
                     <div className="col-4">{item.name}</div>
                     <div className="col-4">{item.area}</div>

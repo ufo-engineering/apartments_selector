@@ -10,7 +10,6 @@ import Route from 'react-router-dom/Route';
 
 
 import App from './components/App.jsx';
-import Areas from './components/Areas.jsx';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
